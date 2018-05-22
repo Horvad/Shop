@@ -1,13 +1,15 @@
-package app;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ShopService {
     private static boolean accountBoolean  = false;
+    public static final Logger LOGGER = LoggerFactory.getLogger(ShopService.class);
+
     ShopDao shopDao = new ShopDao();
     ObjectMapper mapper = new ObjectMapper() ;
     //------------------------------------------------------------------------------------------------------------------
@@ -16,6 +18,7 @@ public class ShopService {
         ArrayList<Good> getAllGoodsArrayListServise = new ArrayList<Good>();
         getAllGoodsArrayListServise = shopDao.getAll();
         String returnList = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(getAllGoodsArrayListServise) ;
+        LOGGER.debug("Result getAll="+returnList);
         return returnList ;
     };
 
@@ -44,6 +47,7 @@ public class ShopService {
                 }
             }
             shopDao.saveAll(saveGoodsArray);
+            LOGGER.debug("result add Googs="+saveGoodsArray.toString());
         }
     }
 
@@ -57,6 +61,7 @@ public class ShopService {
                 findGood = shopDao.findBuyName(buyGood.name) ;
                 if (findGood == null){
                     NullPointerException errorFindGood = new NullPointerException("Такого товара нет в магазине") ;
+                    LOGGER.error(errorFindGood.getMessage());
                     throw errorFindGood ;
                 } else {
                     if (findGood.count==buyGood.count){
@@ -69,10 +74,11 @@ public class ShopService {
                         shopDao.updateAll(findGood);
                     } else {
                         IllegalArgumentException errorUserBuyCount = new IllegalArgumentException("Такого колличества товара нет в магазине") ;
+                        LOGGER.error(errorUserBuyCount.getMessage());
                         throw errorUserBuyCount ;
                     }
                 }
-          //  }
+                LOGGER.debug("resul buy="+buyGood.name+" "+buyGood.count+" result goods to shop="+findGood.name+" "+findGood.count);          //  }
         }
     }
     //------------------------------------------------------------------------------------------------------------------
@@ -83,6 +89,7 @@ public class ShopService {
     //------------------------------------------------------------------------------------------------------------------
 
     public void addAccount(Account account){
+        LOGGER.debug("add account "+account.getName());
         shopDao.addAccount(account);
     }
 
@@ -109,6 +116,7 @@ public class ShopService {
                 returName = "false" ;
             }
         }
+        LOGGER.debug("post account"+account.getName()+"rigts="+returName);
         return returName ;
     }
 }

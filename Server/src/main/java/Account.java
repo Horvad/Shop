@@ -1,5 +1,3 @@
-package app;
-
 public class Account {
     private String name ;
     private String password ;

@@ -1,13 +1,14 @@
-package app;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import static app.Controller.LOGGER;
-
 public class Autorization {
+    public static final Logger LOGGER = LoggerFactory.getLogger(Account.class);
+
     public String Coding (String pass){
         String hash = "";
         try {
