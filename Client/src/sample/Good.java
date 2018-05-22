@@ -1,4 +1,4 @@
-package app;
+package sample;
 
 public class Good {
     public String name ;
