@@ -1,12 +1,11 @@
 package sample;
-
+import sample.Autorization.Autorization;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import sample.FormAndBuyGoodsOrEditGoods.CreaterForm;
 
 
 public class Main extends Application {
@@ -19,8 +18,9 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         firstStage.setTitle("Shop");
 
-        CreaterForm createrForm =new CreaterForm(gridPane) ;
-        gridPane = createrForm.getGridPane() ;
+        Autorization autorization = new Autorization(gridPane) ;
+        autorization.formAutorization() ;
+        gridPane = autorization.getGridPane() ;
 
         Scene scene = new Scene(gridPane,500,500) ;
         firstStage.setScene(scene);

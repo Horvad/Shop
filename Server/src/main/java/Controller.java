@@ -1,3 +1,7 @@
+import Account.Account;
+import Good.Good;
+import Account.AccountServise ;
+import Good.ShopService ;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -10,7 +14,7 @@ import java.util.ArrayList;
 import static spark.Spark.*;
 
 public class Controller {
-    public static final Logger LOGGER = LoggerFactory.getLogger(Good.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(Controller.class);
 
     public static void main(String[] args) {
         ArrayList<Good> initListOfGoods = null;
@@ -67,15 +71,17 @@ public class Controller {
         post("/login", (request, response) -> {
             String login = request.body() ;
             Account account = new ObjectMapper().readValue(login, new TypeReference<Account>(){}) ;
-            String sessionName = service.postAccount(account);
+            AccountServise accountServise = new AccountServise() ;
+            String sessionName = accountServise.postAccount(account);
             return sessionName ;
         });
 
         post("/addAccount", ((request, response) -> {
             String login = request.body() ;
             Account account = new ObjectMapper().readValue(login, new TypeReference<Account>(){}) ;
-            service.addAccount(account);
-            return "OK" ;
+            AccountServise accountServise = new AccountServise() ;
+            String newAccount = accountServise.addAccount(account);
+            return newAccount ;
         }));
 
     }

@@ -1,3 +1,5 @@
+package Account;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,9 +9,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Autorization {
-    public static final Logger LOGGER = LoggerFactory.getLogger(Account.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(Autorization.class);
 
-    public String Coding (String pass){
+    public static String coding (String pass){
         String hash = "";
         try {
             MessageDigest crypt = MessageDigest.getInstance("SHA-1");

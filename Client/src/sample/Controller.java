@@ -1,10 +1,11 @@
 package sample;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sample.Autorization.Account;
+import sample.FormBuyOrEdit.Good;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -24,7 +25,8 @@ public class Controller {
     public ArrayList<Good> getAll(){
         try {
             request = "http://localhost:4567/getAll";
-            StringBuffer response = getConnect(request) ;
+            URL url = new URL(request) ;
+            StringBuffer response = getConnect(url) ;
             ArrayList<Good> goods = new ObjectMapper().readValue(response.toString(),
                     new TypeReference<ArrayList<Good>>() {
                     });
@@ -36,22 +38,12 @@ public class Controller {
         }
     }
 
-    public boolean userLogin (String user,String password){
-        boolean title = false ;
-        if (user.equals("root")){
-            title = true ;
-        } else {
-            title = false ;
-        }
-        LOGGER.debug("user root or don't root login "+String.valueOf(title));
-        return title ;
-    }
-
     public String buy(ArrayList<Good> goods){
         try {
             String listToJson = new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(goods);
             request = "http://localhost:4567/buy";
-            String response = postConnetct(request,listToJson) ;
+            URL url = new URL(request) ;
+            String response = postConnetct(url,listToJson) ;
             if (!response.equals("Don't OK")){
                 return response ;
             }
@@ -66,7 +58,8 @@ public class Controller {
             String goodToJson = new ObjectMapper().writeValueAsString(goodList);
 
             String request = "http://localhost:4567/add";
-            String response = postConnetct(request,goodToJson) ;
+            URL url = new URL(request) ;
+            String response = postConnetct(url,goodToJson) ;
             if (!response.equals("Don't OK")){
                 return response ;
             }
@@ -77,25 +70,25 @@ public class Controller {
     }
 
     public String addAccount(Account account){
+        String responce = "";
         try {
             String addingAccount = new ObjectMapper().writeValueAsString(account);
             String request = "http://localhost:4567/addAccount";
-            String response =postConnetct(request,addingAccount) ;
-            if (!response.equals("Don't OK")){
-                return response ;
-            }
+            URL url = new URL(request) ;
+            responce =postConnetct(url,addingAccount) ;
         } catch (IOException e) {
             LOGGER.error(e.getMessage(),e);
         }
-        return "false" ;
+        return String.valueOf(responce);
     }
 
     public String postAccount(Account account){
         try {
             String postAccount = new ObjectMapper().writeValueAsString(account);
             String request = "http://localhost:4567/login";
-            String response = postConnetct(request,postAccount) ;
-            if (!response.equals("Don't OK")){
+            URL url = new URL(request) ;
+            String response = postConnetct(url,postAccount) ;
+            if (!response.equals("")){
                 return response ;
             }
         } catch (IOException e) {
@@ -104,10 +97,9 @@ public class Controller {
         return "Нет соединения";
     }
 
-    public StringBuffer getConnect (String request){
+    public StringBuffer getConnect (URL url){
         StringBuffer response = new StringBuffer();
         try {
-            URL url = new URL(request);
 
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
@@ -122,14 +114,17 @@ public class Controller {
             in.close();
         } catch (IOException e){
             LOGGER.error(e.getMessage(),e);
+            Allert allert = new Allert();
+            allert.allerts("Ошибка 404, нет соединения");
+            Good.ResetForms resetForms = new Good.ResetForms() ;
+            resetForms.restartFomrs();
         }
         return  response;
     }
 
-    public String postConnetct(String request, String object){
+    public String postConnetct(URL url, String object){
+        StringBuffer response = new StringBuffer();
         try {
-            URL url = new URL(request);
-
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("User-Agent", USER_AGENT);
@@ -144,17 +139,19 @@ public class Controller {
 
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
-            StringBuffer response = new StringBuffer();
 
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }
             in.close();
-            return String.valueOf(response) ;
         } catch (IOException e){
+            Allert allert = new Allert();
+            allert.allerts("Ошибка 404, нет соединения");
+            Good.ResetForms resetForms = new Good.ResetForms() ;
             LOGGER.error(e.getMessage(),e);
+            resetForms.restartFomrs();
         }
-        return "Don't OK" ;
+        return String.valueOf(response) ;
     }
 
 }

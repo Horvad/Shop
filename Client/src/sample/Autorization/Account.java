@@ -1,10 +1,10 @@
-package sample;
+package sample.Autorization;
 
 import javafx.scene.control.TextField;
 
 public class Account {
-    public String name ;
-    public String password ;
+    private String name ;
+    private String password ;
 
     public Account(String name, String password) {
         this.name = name ;

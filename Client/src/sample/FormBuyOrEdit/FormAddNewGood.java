@@ -1,29 +1,29 @@
-package sample.FormAndBuyGoodsOrEditGoods;
-
+package sample.FormBuyOrEdit;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sample.Autorization.Autorization;
 import sample.Controller;
-import sample.Good;
+import sample.Allert ;
 
 import java.util.ArrayList;
 
 public class FormAddNewGood {
-    public static final Logger LOGGER = LoggerFactory.getLogger(Controller.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FormAddNewGood.class);
 
-    Controller controller = new Controller() ;
-    ArrayList<Spinner> spinners = new ArrayList<>() ;
-    Button buttonAdd = new Button("Добавить товар") ;
-    Button buttonRemove = new Button("Удалить товар") ;
-    Button buttonAddNewGood = new Button("Добавить новый товар") ;
-    Button buttonClose = new Button("К авторизации") ;
+    private Controller controller = new Controller() ;
+    private ArrayList<Spinner> spinners = new ArrayList<>() ;
+    private Button buttonAdd = new Button("Добавить товар") ;
+    private Button buttonRemove = new Button("Удалить товар") ;
+    private Button buttonAddNewGood = new Button("Добавить новый товар") ;
+    private Button buttonClose = new Button("К авторизации") ;
 
-    TextField textFieldName = new TextField() ;
-    TextField textFieldCount = new TextField() ;
-    TextField textFieldPrice = new TextField() ;
+    private TextField textFieldName = new TextField() ;
+    private TextField textFieldCount = new TextField() ;
+    private TextField textFieldPrice = new TextField() ;
 
 
     public GridPane formBuy(GridPane gridPane){
@@ -58,7 +58,7 @@ public class FormAddNewGood {
         return gridPane ;
     }
 
-    public GridPane buttonsOnClick(GridPane gridPane){
+    private GridPane buttonsOnClick(GridPane gridPane){
         buttonAdd.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -70,11 +70,8 @@ public class FormAddNewGood {
                 }
                 String title = controller.addGood(goods) ;
                 if (!title.equals("OK")){
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION) ;
-                    alert.setTitle("ОШИБКА");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Удаление не произведено");
-                    alert.show();
+                    Allert alert = new Allert() ;
+                    alert.allerts("Удаление не произведено");
                 }
                 LOGGER.debug("goods+goodsadd:"+goods.toString());
                 gridPane.getChildren().clear();
@@ -87,13 +84,10 @@ public class FormAddNewGood {
             public void handle(ActionEvent event) {
                 ArrayList<Good> goods  = addGoods() ;
                 String title = controller.addGood(goods) ;
-                Alert alert = new Alert(Alert.AlertType.INFORMATION) ;
                 if (goods.size()!=0) {
                     if (!title.equals("OK")) {
-                        alert.setTitle("ОШИБКА");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Удаление не произведено");
-                        alert.show();
+                        Allert alert = new Allert() ;
+                        alert.allerts("Удаление не произведено");
                     }
                 }
                 gridPane.getChildren().clear();
@@ -109,12 +103,9 @@ public class FormAddNewGood {
                 Good good = new Good(textFieldName.getText(),Integer.valueOf(textFieldCount.getText()),Integer.valueOf(textFieldPrice.getText())) ;
                 goods.add(good) ;
                 String title = controller.addGood(goods) ;
-                Alert alert = new Alert(Alert.AlertType.INFORMATION) ;
                 if (!title.equals("OK")){
-                    alert.setTitle("ОШИБКА");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Добовление не произведено");
-                    alert.show();
+                    Allert alert = new Allert() ;
+                    alert.allerts("Добовление не произведено");
                 }
                 gridPane.getChildren().clear();
                 LOGGER.debug("addGood:"+String.valueOf(good));
@@ -132,18 +123,15 @@ public class FormAddNewGood {
         return gridPane ;
     }
 
-    public ArrayList<Good> addGoods (){
+    private ArrayList<Good> addGoods (){
         ArrayList<Good> goods = controller.getAll() ;
         for (int i=0; i<goods.size(); i++){
             if ((int)spinners.get(i).getValue()!=0){
                 if ((int)spinners.get(i).getValue()<=goods.get(i).count){
                     goods.get(i).count = goods.get(i).count-(int)spinners.get(i).getValue() ;
                 }else {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION) ;
-                    alert.setTitle("Ошибка");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Колличество удаляемых товаров не может быть меньше сущусвующих");
-                    alert.show();
+                    Allert allert = new Allert() ;
+                    allert.allerts("Колличество удаляемых товаров не может быть меньше сущусвующих");
                     goods.clear();
                 }
             }

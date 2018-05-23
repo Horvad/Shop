@@ -1,4 +1,4 @@
-package sample.FormAndBuyGoodsOrEditGoods;
+package sample.FormBuyOrEdit;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -7,12 +7,11 @@ import javafx.scene.layout.GridPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sample.Controller;
-import sample.Good;
 
 import java.util.ArrayList;
 
 public class FormBuy {
-    public static final Logger LOGGER = LoggerFactory.getLogger(Controller.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FormBuy.class);
 
     private Button buttonAddToCard = new Button("Добавить в корзину") ;
     private Button buttonRemoveGood = new Button("Удалить") ;
@@ -20,7 +19,7 @@ public class FormBuy {
     private ArrayList<Good>goodsBuy = new ArrayList<>() ;
 
     private static Controller controller = new Controller() ;
-    public static ArrayList<Good> goods = controller.getAll() ;
+    private static ArrayList<Good> goods = controller.getAll() ;
     private static boolean newCardForm = true;
     private static ArrayList<Spinner> spinnersArrayList = new ArrayList<>() ; // спиннеры товаров
     private static ArrayList<Spinner> spinnersCard = new ArrayList<>(); //спинеры корзины
