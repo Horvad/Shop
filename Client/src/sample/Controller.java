@@ -41,32 +41,28 @@ public class Controller {
     }
 
     public String buy(ArrayList<Good> goods){
+        String responce = "" ;
         try {
             String listToJson = new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(goods);
             URL url = new URL(request+"/buy") ;
             String response = postConnetct(url,listToJson) ;
-            if (!response.equals("Don't OK")){
-                return response ;
-            }
         } catch (IOException e) {
             LOGGER.debug(e.getMessage(),e);
         }
-        return "NO" ;
+        return responce ;
     }
 
     public String addGood(ArrayList<Good> goodList) {
+        String responce = "NO";
         try {
             String goodToJson = new ObjectMapper().writeValueAsString(goodList);
 
             URL url = new URL(request+"/add") ;
             String response = postConnetct(url,goodToJson) ;
-            if (!response.equals("Don't OK")){
-                return response ;
-            }
         } catch (IOException e) {
             LOGGER.error(e.getMessage(),e);
         }
-        return "false";
+        return responce;
     }
 
     public String addAccount(Account account){
