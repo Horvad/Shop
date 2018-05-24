@@ -19,7 +19,7 @@ public class Main extends Application {
         firstStage.setTitle("Shop");
 
         Autorization autorization = new Autorization(gridPane) ;
-        autorization.formAutorization() ;
+        autorization.formConnetct();
         gridPane = autorization.getGridPane() ;
 
         Scene scene = new Scene(gridPane,500,500) ;

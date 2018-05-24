@@ -17,15 +17,17 @@ import java.util.ArrayList;
 
 
 public class Controller {
-    public String request ;
+    private static String request ;
     private final String USER_AGENT = "Mozilla/5.0";
-    public static final Logger LOGGER = LoggerFactory.getLogger(Controller.class);
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(Controller.class);
+    public Controller(){} ;
+    public Controller(String request){
+        this.request = request ;
+    }
 
     public ArrayList<Good> getAll(){
         try {
-            request = "http://localhost:4567/getAll";
-            URL url = new URL(request) ;
+            URL url = new URL(request+"/getAll") ;
             StringBuffer response = getConnect(url) ;
             ArrayList<Good> goods = new ObjectMapper().readValue(response.toString(),
                     new TypeReference<ArrayList<Good>>() {
@@ -41,8 +43,7 @@ public class Controller {
     public String buy(ArrayList<Good> goods){
         try {
             String listToJson = new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(goods);
-            request = "http://localhost:4567/buy";
-            URL url = new URL(request) ;
+            URL url = new URL(request+"/buy") ;
             String response = postConnetct(url,listToJson) ;
             if (!response.equals("Don't OK")){
                 return response ;
@@ -57,8 +58,7 @@ public class Controller {
         try {
             String goodToJson = new ObjectMapper().writeValueAsString(goodList);
 
-            String request = "http://localhost:4567/add";
-            URL url = new URL(request) ;
+            URL url = new URL(request+"/add") ;
             String response = postConnetct(url,goodToJson) ;
             if (!response.equals("Don't OK")){
                 return response ;
@@ -66,15 +66,14 @@ public class Controller {
         } catch (IOException e) {
             LOGGER.error(e.getMessage(),e);
         }
-        return "Добавление товара НЕ получилось!";
+        return "false";
     }
 
     public String addAccount(Account account){
         String responce = "";
         try {
             String addingAccount = new ObjectMapper().writeValueAsString(account);
-            String request = "http://localhost:4567/addAccount";
-            URL url = new URL(request) ;
+            URL url = new URL(request+"/addAccount") ;
             responce =postConnetct(url,addingAccount) ;
         } catch (IOException e) {
             LOGGER.error(e.getMessage(),e);
@@ -84,9 +83,10 @@ public class Controller {
 
     public String postAccount(Account account){
         try {
-            String postAccount = new ObjectMapper().writeValueAsString(account);
-            String request = "http://localhost:4567/login";
-            URL url = new URL(request) ;
+            String requestUrl = request+"/login" ;
+            String postAccount = new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(account);
+            System.out.print(postAccount);
+            URL url = new URL(requestUrl) ;
             String response = postConnetct(url,postAccount) ;
             if (!response.equals("")){
                 return response ;
@@ -95,6 +95,18 @@ public class Controller {
             LOGGER.error(e.getMessage(),e);
         }
         return "Нет соединения";
+    }
+
+    public String connect(){
+        String response = "" ;
+        try {
+            String pingClient = "ping" ;
+            URL url = new URL(request+"/connect") ;
+            response = postConnetct(url,pingClient) ;
+        } catch (IOException e) {
+            LOGGER.error(e.getMessage(),e);
+        }
+        return response;
     }
 
     public StringBuffer getConnect (URL url){
@@ -116,8 +128,6 @@ public class Controller {
             LOGGER.error(e.getMessage(),e);
             Allert allert = new Allert();
             allert.allerts("Ошибка 404, нет соединения");
-            Good.ResetForms resetForms = new Good.ResetForms() ;
-            resetForms.restartFomrs();
         }
         return  response;
     }
@@ -147,9 +157,7 @@ public class Controller {
         } catch (IOException e){
             Allert allert = new Allert();
             allert.allerts("Ошибка 404, нет соединения");
-            Good.ResetForms resetForms = new Good.ResetForms() ;
             LOGGER.error(e.getMessage(),e);
-            resetForms.restartFomrs();
         }
         return String.valueOf(response) ;
     }

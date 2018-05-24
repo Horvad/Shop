@@ -20,6 +20,7 @@ public class FormAddNewGood {
     private Button buttonRemove = new Button("Удалить товар") ;
     private Button buttonAddNewGood = new Button("Добавить новый товар") ;
     private Button buttonClose = new Button("К авторизации") ;
+    private Button buttonConnect = new Button("К подключению") ;
 
     private TextField textFieldName = new TextField() ;
     private TextField textFieldCount = new TextField() ;
@@ -118,6 +119,14 @@ public class FormAddNewGood {
                 gridPane.getChildren().clear();
                 Autorization autorization = new Autorization(gridPane) ;
                 autorization.formAutorization() ;
+            }
+        });
+        buttonConnect.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                gridPane.getChildren().clear();
+                Autorization autorization = new Autorization(gridPane) ;
+                autorization.formConnetct();
             }
         });
         return gridPane ;

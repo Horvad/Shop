@@ -3,8 +3,8 @@ package sample.Autorization;
 import javafx.scene.control.TextField;
 
 public class Account {
-    private String name ;
-    private String password ;
+    public String name ;
+    public String password ;
 
     public Account(String name, String password) {
         this.name = name ;

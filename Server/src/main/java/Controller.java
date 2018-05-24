@@ -84,5 +84,13 @@ public class Controller {
             return newAccount ;
         }));
 
+        post("/connect",((request, response) -> {
+            String ping = "" ;
+            if (!request.equals("")){
+                ping = "OK" ;
+            }
+            return ping ;
+        }));
+
     }
 }

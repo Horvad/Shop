@@ -57,7 +57,7 @@ public class ShopService {
     public void buyGoods(List<Good> arrayGoods) {
         int userBuyMoney = 0 ;
         Good findGood = null;
-        synchronized (findGood) {
+       // synchronized (findGood) {
             for (Good buyGood : arrayGoods) {
                 findGood = shopDao.findBuyName(buyGood.name);
                 if (findGood == null) {
@@ -83,4 +83,3 @@ public class ShopService {
             }
         }
     }
-}

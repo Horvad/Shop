@@ -16,11 +16,4 @@ public class Good {
         this.price = price ;
     }
 
-    public static class ResetForms {
-        private GridPane gridPane = new GridPane() ;
-
-        public void restartFomrs (){
-            Autorization autorization = new Autorization(gridPane) ;
-        }
-    }
 }

@@ -19,15 +19,40 @@ import sample.FormBuyOrEdit.FormBuy;
 public class Autorization {
     private GridPane gridPane = new GridPane() ;
     private static String title ;
+    private static String request = "" ;
     private TextField textFieldAccout = new TextField() ;
     private PasswordField passwordField = new PasswordField() ;
     private Button buttonLogin = new Button("Войти") ;
     private Button buttonAddUser = new Button("Добавить") ;
+    private Button connect = new Button("Connect") ;
     private static final Logger LOGGER = LoggerFactory.getLogger(Autorization.class);
 
 
     public Autorization(GridPane gridPane){
         this.gridPane = gridPane ;
+    }
+
+    public void formConnetct(){
+        gridPane.getChildren().clear();
+        Label labelUrl = new Label("URL") ;
+        gridPane.add(labelUrl,0,0,1,1);
+        TextField textFieldUrl = new TextField() ;
+        gridPane.add(textFieldUrl,1,0,1,1);
+        gridPane.add(connect,2,0,1,1);
+        connect.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                request = String.valueOf(textFieldUrl.getText()) ;
+                if (request.equals("")){
+                    request = "http://localhost:4567" ;
+                }
+                Controller controller = new Controller(request) ;
+                String ping = controller.connect() ;
+                if (ping.equals("OK")){
+                    formAutorization() ;
+                }
+            }
+        });
     }
 
     public String formAutorization(){
@@ -65,8 +90,8 @@ public class Autorization {
         buttonAddUser.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                title = addUser(title) ;
                 Account account = new Account(String.valueOf(textFieldAccout.getText()),String.valueOf(passwordField.getText())) ;
+                title = addUser(title) ;
                 Allert allert = new Allert() ;
                 if (title.equals("Account is been")){
                     allert.allerts("Аккаунт существует");
@@ -81,7 +106,7 @@ public class Autorization {
     }
 
     private String autorization(String title){
-        Controller controller = new Controller() ;
+        Controller controller = new Controller(request) ;
         Account account = new Account(String.valueOf(textFieldAccout.getText()),String.valueOf(passwordField.getText())) ;
         title = controller.postAccount(account) ;
         LOGGER.debug("autorization="+String.valueOf(account)+" title"+title);
@@ -89,12 +114,14 @@ public class Autorization {
     }
 
     private String addUser(String title){
-        Controller controller = new Controller() ;
+        Controller controller = new Controller(request) ;
         Account account = new Account(String.valueOf(textFieldAccout.getText()),String.valueOf(passwordField.getText())) ;
         title = controller.addAccount(account) ;
         LOGGER.debug("Add account="+String.valueOf(account)+" title"+title);
         return title ;
     }
+
+
 
     public GridPane getGridPane() {
         return gridPane;
