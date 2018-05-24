@@ -4,9 +4,9 @@ import javafx.scene.layout.GridPane;
 import sample.Autorization.Autorization;
 
 public class Good {
-    public String name ;
-    public int count ;
-    public int price ;
+    private String name ;
+    private int count ;
+    private int price ;
 
     public Good(){}  ;
 
@@ -16,4 +16,27 @@ public class Good {
         this.price = price ;
     }
 
+    public int getCount() {
+        return count;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
 }

@@ -32,13 +32,13 @@ public class ShopService {
             for (Good newGoods : goods) {
                 boolean newGoodBoolean = true;
                 for (Good saveGood : saveGoodsArray) {
-                    if (saveGood.name.equals(newGoods.name)) {
-                        if (newGoods.count!=0){
-                            saveGood.count = newGoods.count ;
+                    if (saveGood.getName().equals(newGoods.getName())) {
+                        if (newGoods.getCount()!=0){
+                            saveGood.setCount(newGoods.getCount()) ;
                         } else {
                             saveGoodsArray.remove(saveGood) ;
                         }
-                        saveGood.price = newGoods.price;
+                        saveGood.setPrice(newGoods.getPrice());
                         newGoodBoolean = false;
 
                     }
@@ -59,19 +59,19 @@ public class ShopService {
         Good findGood = null;
        // synchronized (findGood) {
             for (Good buyGood : arrayGoods) {
-                findGood = shopDao.findBuyName(buyGood.name);
+                findGood = shopDao.findBuyName(buyGood.getName());
                 if (findGood == null) {
                     NullPointerException errorFindGood = new NullPointerException("Такого товара нет в магазине");
                     LOGGER.error(errorFindGood.getMessage());
                     throw errorFindGood;
                 } else {
-                    if (findGood.count == buyGood.count) {
-                        userBuyMoney = userBuyMoney + buyGood.count * findGood.price;
-                        shopDao.deleteByName(findGood.name);
+                    if (findGood.getCount() == buyGood.getCount()) {
+                        userBuyMoney = userBuyMoney + buyGood.getCount() * findGood.getPrice();
+                        shopDao.deleteByName(findGood.getName());
                     }
-                    if (findGood.count > buyGood.count) {
-                        findGood.count = findGood.count - buyGood.count;
-                        userBuyMoney = userBuyMoney + findGood.price * buyGood.count;
+                    if (findGood.getCount() > buyGood.getCount()) {
+                        findGood.setCount(findGood.getCount() - buyGood.getCount());
+                        userBuyMoney = userBuyMoney + findGood.getPrice() * buyGood.getCount();
                         shopDao.updateAll(findGood);
                     } else {
                         IllegalArgumentException errorUserBuyCount = new IllegalArgumentException("Такого колличества товара нет в магазине");
@@ -79,7 +79,7 @@ public class ShopService {
                         throw errorUserBuyCount;
                     }
                 }
-                LOGGER.debug("resul buy=" + buyGood.name + " " + buyGood.count + " result goods to shop=" + findGood.name + " " + findGood.count);          //  }
+                LOGGER.debug("resul buy=" + buyGood.getName() + " " + buyGood.getCount()+ " result goods to shop=" + findGood.getName() + " " + findGood.getCount());          //  }
             }
         }
     }

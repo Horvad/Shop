@@ -7,11 +7,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.control.Alert ;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sample.Allert;
-import sample.Controller;
+import sample.FormBuyOrEdit.Controller.Controller;
 import sample.FormBuyOrEdit.FormAddNewGood;
 import sample.FormBuyOrEdit.FormBuy;
 

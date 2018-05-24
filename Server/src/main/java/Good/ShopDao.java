@@ -34,7 +34,7 @@ public class ShopDao {
         findBuyNameGoods = getAll() ;
         Good good = null ;
         for(Good tmpgood: findBuyNameGoods){
-            if (tmpgood.name.equals(name)){
+            if (tmpgood.getName().equals(name)){
                 good = tmpgood;
             }
         }
@@ -54,7 +54,7 @@ public class ShopDao {
         deleteByNameGoods = getAll() ;
         boolean errFindDeleteName = true ;
         for (Good good: deleteByNameGoods){
-            if (good.name.equals(name)){
+            if (good.getName().equals(name)){
                 deleteByNameGoods.remove(good) ;
                 errFindDeleteName = false ;
                 break;
@@ -87,9 +87,9 @@ public class ShopDao {
         ArrayList<Good> arrayUpdate = new ArrayList<Good>() ;
         arrayUpdate = getAll() ;
         for (Good updateGood : arrayUpdate){
-            if (updateGood.name.equals(good.name)){
-                updateGood.count = good.count ;
-                updateGood.price = good.price ;
+            if (updateGood.getName().equals(good.getName())){
+                updateGood.setCount(good.getCount()) ;
+                updateGood.setPrice(good.getPrice()) ;
             }
         }
         LOGGER.debug("ArrayList saves="+arrayUpdate.toString());

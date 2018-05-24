@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import static spark.Spark.*;
 
 public class Controller {
-    public static final Logger LOGGER = LoggerFactory.getLogger(Controller.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Controller.class);
 
     public static void main(String[] args) {
         ArrayList<Good> initListOfGoods = null;

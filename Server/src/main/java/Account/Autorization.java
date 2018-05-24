@@ -9,7 +9,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Autorization {
-    public static final Logger LOGGER = LoggerFactory.getLogger(Autorization.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Autorization.class);
 
     public static String coding (String pass){
         String hash = "";

@@ -6,7 +6,7 @@ import javafx.scene.layout.GridPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sample.Autorization.Autorization;
-import sample.Controller;
+import sample.FormBuyOrEdit.Controller.Controller;
 import sample.Allert ;
 
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class FormAddNewGood {
                 ArrayList<Good> goods = controller.getAll() ;
                 for (int i=0; i<goods.size(); i++){
                     if ((int)spinners.get(i).getValue()!=0){
-                        goods.get(i).count = goods.get(i).count+(int)spinners.get(i).getValue() ;
+                        goods.get(i).setCount(goods.get(i).getCount()+(int)spinners.get(i).getValue()) ;
                     }
                 }
                 String title = controller.addGood(goods) ;
@@ -136,8 +136,8 @@ public class FormAddNewGood {
         ArrayList<Good> goods = controller.getAll() ;
         for (int i=0; i<goods.size(); i++){
             if ((int)spinners.get(i).getValue()!=0){
-                if ((int)spinners.get(i).getValue()<=goods.get(i).count){
-                    goods.get(i).count = goods.get(i).count-(int)spinners.get(i).getValue() ;
+                if ((int)spinners.get(i).getValue()<=goods.get(i).getCount()){
+                    goods.get(i).setCount(goods.get(i).getCount()-(int)spinners.get(i).getValue()) ;
                 }else {
                     Allert allert = new Allert() ;
                     allert.allerts("Колличество удаляемых товаров не может быть меньше сущусвующих");

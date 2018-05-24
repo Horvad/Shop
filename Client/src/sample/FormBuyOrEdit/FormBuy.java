@@ -6,7 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sample.Controller;
+import sample.FormBuyOrEdit.Controller.Controller;
 
 import java.util.ArrayList;
 
@@ -46,9 +46,9 @@ public class FormBuy {
         for (int i=0 ; i<goodsForm.size(); i++){
             goods = controller.getAll() ;
             LOGGER.debug("goods whith server: "+goods.toString());
-            gridPane.add(new Label(String.valueOf(goodsForm.get(i).name)),0,countString,1,1);
-            gridPane.add(new Label(String.valueOf(goodsForm.get(i).count)),1,countString,1,1);
-            gridPane.add(new Label(String.valueOf(goodsForm.get(i).price)),2,countString,1,1);
+            gridPane.add(new Label(String.valueOf(goodsForm.get(i).getName())),0,countString,1,1);
+            gridPane.add(new Label(String.valueOf(goodsForm.get(i).getCount())),1,countString,1,1);
+            gridPane.add(new Label(String.valueOf(goodsForm.get(i).getPrice())),2,countString,1,1);
             countString++ ;
         }
     }
@@ -64,15 +64,15 @@ public class FormBuy {
             boolean newSpinner = true ;
             if (goodsBuy.size()!=0){
                 for (Good good : goodsBuy){
-                    if (goods.get(i).name.equals(good.name)){
-                      spinnerValueFactoriesArrayList.add(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,goods.get(i).count-good.count,1)) ;
+                    if (goods.get(i).getName().equals(good.getName())){
+                      spinnerValueFactoriesArrayList.add(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,goods.get(i).getCount()-good.getCount(),1)) ;
                       newSpinner = false ;
                       break;
                     }
                 }
             }
             if (newSpinner){
-                spinnerValueFactoriesArrayList.add(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,goods.get(i).count,1)) ;
+                spinnerValueFactoriesArrayList.add(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,goods.get(i).getCount(),1)) ;
             }
             spinnerValueFactoriesArrayList.get(i).setValue(0);
             spinnersArrayList.add(new Spinner(spinnerValueFactoriesArrayList.get(i))) ;
@@ -100,17 +100,17 @@ public class FormBuy {
                     if ((int)spinnersCard.get(i).getValue()!=0){
                         boolean newGood = true ;
                         for (int j=0; j<goods.size(); j++){
-                            if (goods.get(j).name.equals(goodsBuy.get(i).name)){
+                            if (goods.get(j).getName().equals(goodsBuy.get(i).getName())){
                                 newGood = false ;
-                                goods.get(j).count=goods.get(j).count+(int)spinnersCard.get(i).getValue() ;
+                                goods.get(j).setCount(goods.get(j).getCount()+(int)spinnersCard.get(i).getValue()) ;
                                 break;
                             }
                         }
                         if (newGood){
-                            goods.add(new Good(goodsBuy.get(i).name,(int)spinnersCard.get(i).getValue(),goodsBuy.get(i).price));
+                            goods.add(new Good(goodsBuy.get(i).getName(),(int)spinnersCard.get(i).getValue(),goodsBuy.get(i).getPrice()));
                         } ;
-                        goodsBuy.get(i).count = goodsBuy.get(i).count-(int)spinnersCard.get(i).getValue() ;
-                        if (goodsBuy.get(i).count==0){goodsBuy.remove(i);}
+                        goodsBuy.get(i).setCount(goodsBuy.get(i).getCount()-(int)spinnersCard.get(i).getValue()) ;
+                        if (goodsBuy.get(i).getCount()==0){goodsBuy.remove(i);}
                     }
 
                 }
@@ -157,15 +157,15 @@ public class FormBuy {
             if (count!=0){
                 spinner0 = false ;
                 for (Good good : goodsBuy){
-                    if (goods.get(i).name.equals(good.name)){
+                    if (goods.get(i).getName().equals(good.getName())){
                         newGood = false ;
-                        good.count = good.count+(Integer)spinnersArrayList.get(i).getValue() ;
+                        good.setCount(good.getCount()+(Integer)spinnersArrayList.get(i).getValue()) ;
                         break;
                     }
                 }
-                if (newGood) {goodsBuy.add(new Good(goods.get(i).name,(int)(spinnersArrayList.get(i).getValue()),goods.get(i).price)) ;}
-                goods.get(i).count = goods.get(i).count-(Integer)spinnersArrayList.get(i).getValue() ;
-                if (goods.get(i).count==0){goods.remove(i);} ;
+                if (newGood) {goodsBuy.add(new Good(goods.get(i).getName(),(int)(spinnersArrayList.get(i).getValue()),goods.get(i).getPrice())) ;}
+                goods.get(i).setCount(goods.get(i).getCount()-(Integer)spinnersArrayList.get(i).getValue()) ;
+                if (goods.get(i).getCount()==0){goods.remove(i);} ;
             }
         }
         formGoods(gridPane) ;
@@ -185,7 +185,7 @@ public class FormBuy {
         ArrayList<SpinnerValueFactory> spinnerValueFactoryCart = new ArrayList<>() ;
         countString=countString-goodsBuy.size() ;
         for (int i = 0; i<goodsBuy.size(); i++){
-            spinnerValueFactoryCart.add(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,goodsBuy.get(i).count,1)) ;
+            spinnerValueFactoryCart.add(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,goodsBuy.get(i).getCount(),1)) ;
             spinnerValueFactoryCart.get(i).setValue(0);
             spinnersCard.add(new Spinner(spinnerValueFactoryCart.get(i))) ;
             gridPane.add(spinnersCard.get(i),3,countString,1,1);

@@ -1,9 +1,9 @@
 package Good;
 
 public class Good {
-    public String name ;
-    public int count ;
-    public int price ;
+    private String name ;
+    private int count ;
+    private int price ;
 
     public Good(){}  ;
 
@@ -11,5 +11,25 @@ public class Good {
         this.name = name;
         this.count = count ;
         this.price = price ;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public int getPrice() {
+        return price;
     }
 }
