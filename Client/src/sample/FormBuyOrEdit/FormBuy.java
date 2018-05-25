@@ -6,7 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sample.FormBuyOrEdit.Controller.Controller;
+import sample.Controller.Controller;
 
 import java.util.ArrayList;
 

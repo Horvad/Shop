@@ -10,7 +10,7 @@ import javafx.scene.layout.GridPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sample.Allert;
-import sample.FormBuyOrEdit.Controller.Controller;
+import sample.Controller.Controller;
 import sample.FormBuyOrEdit.FormAddNewGood;
 import sample.FormBuyOrEdit.FormBuy;
 
