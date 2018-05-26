@@ -4,9 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import sample.Controller.Controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sample.Controller.Controller;
 
 import java.util.ArrayList;
 
@@ -16,7 +16,7 @@ public class FormBuy {
     private Button buttonAddToCard = new Button("Добавить в корзину") ;
     private Button buttonRemoveGood = new Button("Удалить") ;
     private Button buttonBuy = new Button("Купить") ;
-    private ArrayList<Good>goodsBuy = new ArrayList<>() ;
+    private ArrayList<Good> goodsBuy = new ArrayList<>() ;
 
     private static Controller controller = new Controller() ;
     private static ArrayList<Good> goods = controller.getAll() ;
@@ -65,9 +65,9 @@ public class FormBuy {
             if (goodsBuy.size()!=0){
                 for (Good good : goodsBuy){
                     if (goods.get(i).getName().equals(good.getName())){
-                      spinnerValueFactoriesArrayList.add(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,goods.get(i).getCount()-good.getCount(),1)) ;
-                      newSpinner = false ;
-                      break;
+                        spinnerValueFactoriesArrayList.add(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,goods.get(i).getCount()-good.getCount(),1)) ;
+                        newSpinner = false ;
+                        break;
                     }
                 }
             }
@@ -194,3 +194,4 @@ public class FormBuy {
         return gridPane;
     }
 }
+

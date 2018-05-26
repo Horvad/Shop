@@ -1,13 +1,14 @@
 package sample.FormBuyOrEdit;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sample.Allert;
 import sample.Autorization.Autorization;
 import sample.Controller.Controller;
-import sample.Allert ;
 
 import java.util.ArrayList;
 
@@ -72,7 +73,7 @@ public class FormAddNewGood {
                 String title = controller.addGood(goods) ;
                 if (!title.equals("OK")){
                     Allert alert = new Allert() ;
-                    alert.allerts("Удаление не произведено");
+                    alert.allerts("Добавление не произведено");
                 }
                 LOGGER.debug("goods+goodsadd:"+goods.toString());
                 gridPane.getChildren().clear();

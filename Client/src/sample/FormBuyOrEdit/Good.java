@@ -1,8 +1,5 @@
 package sample.FormBuyOrEdit;
 
-import javafx.scene.layout.GridPane;
-import sample.Autorization.Autorization;
-
 public class Good {
     private String name ;
     private int count ;
@@ -40,3 +37,4 @@ public class Good {
         this.price = price;
     }
 }
+

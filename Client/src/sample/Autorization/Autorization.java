@@ -14,7 +14,6 @@ import sample.Controller.Controller;
 import sample.FormBuyOrEdit.FormAddNewGood;
 import sample.FormBuyOrEdit.FormBuy;
 
-
 public class Autorization {
     private GridPane gridPane = new GridPane() ;
     private static String title ;
@@ -126,3 +125,4 @@ public class Autorization {
         return gridPane;
     }
 }
+
